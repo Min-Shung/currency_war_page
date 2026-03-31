@@ -9,6 +9,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,25 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late VideoPlayerController _controller;
+
+@override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    
+    // 1. 預載共用的超大背景圖
+    precacheImage(const AssetImage('assets/images/IMG_9478.JPG'), context);
+    precacheImage(const AssetImage('assets/images/IMG_9465.JPG'), context); // 側邊欄按鈕底圖
+    precacheImage(const AssetImage('assets/images/IMG_9528.JPG'), context); // 底部按鈕底圖
+
+    for (int i = 0; i < 5; i++) {
+      precacheImage(AssetImage('assets/images/exp$i.JPG'), context);
+      precacheImage(AssetImage('assets/images/mpre$i.JPG'), context);
+    }
+    for (int i = 0; i < 7; i++) {
+      precacheImage(AssetImage('assets/images/bond$i.JPG'), context);
+      precacheImage(AssetImage('assets/images/icon$i.png'), context); 
+    }
+  }
 
   @override
   void initState() {

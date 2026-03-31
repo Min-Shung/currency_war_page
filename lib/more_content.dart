@@ -137,19 +137,22 @@ class _MoreContentPageState extends State<MoreContentPage> {
                         SizedBox(
                           width: 420,
                           child: ClipPath(
-                            clipper: CutCornerClipper(cutSize:10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  // === 修改點：讀取 more0.JPG, more1.JPG 等圖片 ===
-                                  image: AssetImage('assets/images/more$_currentIndex.JPG'),
-                                  fit: BoxFit.cover, 
-                                ),
-                              ),
+                            clipper: CutCornerClipper(cutSize: 10),
+                            child: IndexedStack(
+                              index: _currentIndex,
+                              children: List.generate(_categories.length, (index) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage('assets/images/more$index.JPG'),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                );
+                              }),
                             ),
                           ),
                         ),
-
                       Positioned(
                         left: 6,
                         child: GestureDetector(

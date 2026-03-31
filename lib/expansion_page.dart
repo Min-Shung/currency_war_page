@@ -186,20 +186,27 @@ class _ExpansionPageState extends State<ExpansionPage> {
                         alignment: Alignment.center,
                         children: [
                           //中間圖片展示區
-                          SizedBox(
-                            width: 420,
-                            child: ClipPath(
-                              clipper: CutCornerClipper(cutSize:10),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/images/exp$_currentIndex.JPG'),
-                                    fit: BoxFit.cover, 
+                        SizedBox(
+                          width: 420,
+                          child: ClipPath(
+                            clipper: CutCornerClipper(cutSize: 10),
+                            child: IndexedStack(
+                              index: _currentIndex, 
+                              children: List.generate(_categories.length, (index) {
+                                return Container(
+                                  height: 190,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      // 這裡改用迴圈的 index 來生成所有圖片
+                                      image: AssetImage('assets/images/exp$index.JPG'),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                ),
-                              ),
+                                );
+                              }),
                             ),
                           ),
+                        ),
 
                         // 左按鈕 (永遠顯示)
                         Positioned(

@@ -48,22 +48,20 @@ class _BondUpdatePageState extends State<BondUpdatePage> {
 
     double targetScrollOffset = 0;
 
-    // 🌟 1. 如果是第 1, 2 個 (index 0 或 1)，直接滑到最左邊
+    //如果是第1, 2個，直接滑到最左邊
     if (index <= 1) {
       targetScrollOffset = 0.0;
     } 
-    // 🌟 2. 如果是倒數第 1, 2 個 (例如總長7，即 index 5 或 6)，直接滑到最右邊
+    // 如果是倒數第 1, 2個，直接滑到最右邊
     else if (index >= _categories.length - 2) {
       targetScrollOffset = _scrollController.position.maxScrollExtent;
     } 
-    // 🌟 3. 中間的項目 (index 2, 3, 4...) 則維持置中計算
+    // 中間的項目置中計算
     else {
       double screenWidth = MediaQuery.of(context).size.width;
-      // 圖示寬度 50 + 左右 Padding (8*2) = 66
       double itemWidth = 50 + 16;
       targetScrollOffset = (itemWidth * index) - (screenWidth - itemWidth) / 2;
 
-      // 避免計算結果超出極限範圍
       double maxScroll = _scrollController.position.maxScrollExtent;
       if (targetScrollOffset > maxScroll) targetScrollOffset = maxScroll;
       if (targetScrollOffset < 0) targetScrollOffset = 0;
@@ -121,14 +119,20 @@ class _BondUpdatePageState extends State<BondUpdatePage> {
                       children: [
                         SizedBox(
                           width: 458,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/images/bond$_currentIndex.JPG'),
-                                  fit: BoxFit.cover, 
+                          child: IndexedStack(
+                            index: _currentIndex, 
+                            children: List.generate(_categories.length, (index) {
+                              return Container(
+                                height: 458,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/images/bond$index.JPG'),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              ),
-                            ),
+                              );
+                            }),
+                          ),
                         ),
 
                         Positioned(
